@@ -300,9 +300,10 @@ static void display_reinit(void)
       EMIT_INSTRUCTION_VAR_DATA(EPD_CMD_RESOLUTION_SETTING, {params->x_res_effective >> 8, params->x_res_effective & 0xFF, params->y_res_effective >> 8, params->y_res_effective & 0xFF});
       EMIT_INSTRUCTION_STATIC_DATA(0x30, {0x02});                             // PLL
       // CDI[7:6] select the border colour. Determined empirically on the
-      // EL042TS1: 00=black (Solum's 0x17), 01=yellow, 10=white. We prefer
-      // white.
-      EMIT_INSTRUCTION_STATIC_DATA(0x50, {0x97});                             // CDI
+      // EL042TS1: 00=black, 01=yellow, 10/11=washed-out yellow. White is
+      // not reachable — the OTP border LUT has no white entry — so we
+      // keep Solum's stock black border.
+      EMIT_INSTRUCTION_STATIC_DATA(0x50, {0x17});                             // CDI
       EMIT_INSTRUCTION_STATIC_DATA(0xFF, {0xA5});                             // vendor unlock
       EMIT_INSTRUCTION_STATIC_DATA(0xEF, {0x01, 0x32, 0x08, 0x32, 0x0E, 0x4B, 0x19, 0x4B});
       EMIT_INSTRUCTION_STATIC_DATA(0xDB, {0x00});
